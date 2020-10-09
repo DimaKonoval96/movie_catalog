@@ -1,0 +1,24 @@
+.Card {
+	min-width: 150px;
+	max-width: 200px;
+	margin-top: 20px;
+	margin-right: 20px;
+	border: 1px solid #ccc;
+	border-radius: 10px;
+	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+	cursor: pointer;
+
+	img {
+		width: 100%;
+		border-top-left-radius: 10px;
+		border-top-right-radius: 10px;
+	}
+
+	.CardInfo {
+		padding: 10px 10px;
+
+		p.title {
+			font-weight: bold;
+		}
+	}
+}
