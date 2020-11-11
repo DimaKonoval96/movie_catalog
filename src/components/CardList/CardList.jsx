@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 import Card from '../Card/Card';
+import { Link } from 'react-router-dom';
 import './CardList.scss';
 
 class CardList extends Component {
 	constructor(props) {
 		super(props);
-		this.state = {};
+		this.state = { strId: '' };
 	}
 
 	render() {
@@ -13,14 +14,15 @@ class CardList extends Component {
 			<div className='CardList'>
 				{this.props.cards.map((card) => {
 					return (
-						<Card
-							key={card.id}
-							id={card.id}
-							posterPath={card.poster_path}
-							title={card.title}
-							voteAverage={card.vote_average}
-							releaseDate={card.release_date}
-						/>
+						<Link to={`/movie/${card.id}`} key={card.id}>
+							<Card
+								id={card.id}
+								posterPath={card.poster_path}
+								title={card.title}
+								voteAverage={card.vote_average}
+								releaseDate={card.release_date}
+							/>
+						</Link>
 					);
 				})}
 			</div>
