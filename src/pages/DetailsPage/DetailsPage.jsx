@@ -12,12 +12,15 @@ function DetailsPage(props) {
 		poster_path: posterPath,
 		title,
 		backdrop_path: backdropPath,
+		release_date: releaseDate,
+		release_dates: releaseDates,
 	} = cardDetails;
+
 	useEffect(() => {
 		let unmounted = false;
 		setLoading(true);
 		fetch(
-			`https://api.themoviedb.org/3/movie/${cardId}?api_key=${API_KEY}&language=en-US&append_to_response=images`
+			`https://api.themoviedb.org/3/movie/${cardId}?api_key=${API_KEY}&language=en-US&append_to_response=release_dates`
 		)
 			.then((res) => {
 				return res.json();
@@ -33,27 +36,61 @@ function DetailsPage(props) {
 		};
 	}, []);
 
+	const getReleaseYear = () => {
+		return releaseDate.split('-')[0];
+	};
+
+	// Search for release details based on release date
+	const getCertification = () => {
+		const res = releaseDates.results.find(
+			(releaseObj) => releaseObj['iso_3166_1'] === 'US'
+		);
+		// console.log(res);
+		return res.release_dates[0].certification;
+	};
+
+	//Change date's format from yyyy-mm-dd to mm/dd/yyyy
+	const formatDate = () => {
+		const [year, month, day] = releaseDate.split('-');
+		return [month, day, year].join('/');
+	};
+	// Conditional rendering
 	if (isLoading) {
 		return <div>Loading...</div>;
 	}
 	return (
 		<div>
-			<div
-				className='Backdrop-container'
-				style={{
-					backgroundImage: `url(
+			{backdropPath && (
+				<div
+					className='Backdrop-container'
+					style={{
+						backgroundImage: `url(
 						https://image.tmdb.org/t/p/w1920_and_h800_multi_faces${backdropPath}
 					)`,
-				}}
-			>
-				{/* <img
-					className='Backdrop'
-					src={`https://image.tmdb.org/t/p/w1920_and_h800_multi_faces${backdropPath}`}
-					alt={`${title}`}
-					title={`${title}`}
-				/> */}
-				<div className='overlay'></div>
-			</div>
+					}}
+				>
+					<div className='container'>
+						{posterPath && (
+							<img
+								className='poster'
+								src={`https://image.tmdb.org/t/p/w300_and_h450_bestv2${posterPath}`}
+								alt={`${title}`}
+								title={`${title}`}
+							/>
+						)}
+						<div className='mainInfo'>
+							<h1 className='title'>
+								{title} <span>({releaseDate && getReleaseYear()})</span>
+							</h1>
+							<div>
+								<span>{getCertification()} </span>
+								<span>{formatDate()}</span>
+							</div>
+						</div>
+					</div>
+					<div className='overlay'></div>
+				</div>
+			)}
 		</div>
 	);
 }

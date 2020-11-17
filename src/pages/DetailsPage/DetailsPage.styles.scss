@@ -2,12 +2,23 @@
 	position: relative;
 	margin-top: 80px;
 	display: flex;
-	// width: 90%;
 	height: 35rem;
-	// left: 10%;
 
-	.Backdrop {
-		object-fit: fill;
+	.container {
+		display: flex;
+		width: 70%;
+		margin: 0 auto;
+		text-align: center;
+		border: 1px solid red;
+		z-index: 100;
+		padding: 2rem 2rem;
+		.poster {
+			// position: absolute;
+			border-radius: 5px;
+		}
+		.mainInfo {
+			color: white;
+		}
 	}
 	.overlay {
 		position: absolute;
